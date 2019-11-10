@@ -2,7 +2,7 @@
 
 - name: Add users to groups
   shell:
-    cmd: "egrep -i '^{{item.1}}' /etc/group && usermod -a -G {{item.1}} {{item.0.name}}"
+    cmd: "egrep -i '^{{item.1}}' /etc/group && usermod -a -G {{item.1}} {{item.0.name}} || true"
   with_subelements:
     - "{{ users }}"
     - groups
