@@ -1,0 +1,14 @@
+---
+
+- name: "Is {{ item.0.name }} already member of group {{ item.1 }}"
+  command:
+    cmd: "egrep -i '^{{ item.1 }}.*{{ item.0.name }}.*' /etc/group"
+  register: egrep
+  changed_when: false
+  ignore_errors: yes
+
+- name: Add {{ item.0.name }} to group {{ item.1 }}"
+  command:
+    cmd: "usermod -a -G {{ item.1 }} {{ item.0.name }}"
+  when: egrep.rc != 0
+
